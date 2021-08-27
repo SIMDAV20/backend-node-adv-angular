@@ -12,6 +12,10 @@ const app = express();
 // Configuracion de cors
 app.use( cors() );
 
+// Lectura y parseo del body
+app.use( express.json() );
+
+
 // Base de datos;
 dbConnection();
 // mean_user
@@ -21,14 +25,18 @@ dbConnection();
 // console.log( process.env );
 
 // Rutas
-app.get( '/', (req, res) => {
+app.use( '/api/usuarios', require('./routes/usuarios') );
+app.use( '/api/login', require('./routes/auth') );
 
-  res.json({
-    ok: true,
-    msg: 'Hola Mundo'
-  })
 
-});
+// app.get( '/', (req, res) => {
+
+//   res.json({
+//     ok: true,
+//     msg: 'Hola Mundo'
+//   })
+
+// });
 
 
 app.listen( process.env.port, () => {
